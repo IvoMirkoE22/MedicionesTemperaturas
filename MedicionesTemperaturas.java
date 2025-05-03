@@ -8,7 +8,7 @@ public class MedicionesTemperaturas
     /**
      * Contiene las mediciones de temperaturas.
      */
-    private ArrayList<Integer> registros;
+    private ArrayList<Double> registros;
     
     /**
      * Dia del registro
@@ -32,39 +32,44 @@ public class MedicionesTemperaturas
         assert mes >= 1 && mes <= 12;
         this.dia = dia;
         this.mes = mes;
-        this.registros = new ArrayList<Integer>();
+        this.registros = new ArrayList<Double>();
     }
     
     /**
      * Agrega una temperatura al registro de temperaturas
+     * Evitaremos que se ingrese temperatruas menores al cero absoluto
+     * El cero absoluto es -273.15°C, la temperatura más bbaja físicamente posible
      */
-    public void agregarRegistro(int nuevaTemperatura) {
-        registros.add(new Integer(nuevaTemperatura));
+    public void agregarRegistro(Double nuevaTemperatura) {
+        //Precondición : la temperatura no puede ser menor al cero absoluto
+        assert nuevaTemperatura >= -273.15: "Temperatura inferior a cero absoluto";
+        registros.add((nuevaTemperatura));
     }
+
     /**
      * Muestra todas las temperaturas registradas en 
      * la pantalla.
      * Una temperatura se considera extrema si es:
      * -Mayor a 35°C (Caluroso)
      * -Menor a -15°C (Frío)
-     * El método tambien cuenta por separado las temperaturas calurosas y frías
+     * El método también cuenta por separado las temperaturas calurosas y frías
      * Por si se desea usar esa información más adelante
      */
     public int cantTemperaturasExtremas(){
-        int cantTempC=0;
-        int cantTempF=0;
+        int cantTempC = 0;
+        int cantTempF = 0;
         int tempExtremas;
-        for(int temperatura : registros){
+        for(Double temperatura : registros){
             if(temperatura > 35) {
                 cantTempC = cantTempC + 1;
-            }else
-                if(temperatura < -15){
-                    cantTempF = cantTempF + 1;
-                }
+            } else if(temperatura < -15){
+                cantTempF = cantTempF + 1;
+            }
         }
         tempExtremas = cantTempC + cantTempF;
         return tempExtremas;
     }
+
     /**
      * Muestra todas las temperaturas registradas en 
      * la pantalla. 
@@ -72,11 +77,11 @@ public class MedicionesTemperaturas
     public void imprimirTemperaturas() {
         System.out.println(dia + "/" + mes);
         int pos = 0;
-        for (Integer temperatura: registros) {
+        for (Double temperatura: registros) {
             System.out.print(pos + ": ");
-            System.out.println(temperatura + "C");
+            System.out.println(temperatura + "°C");
             pos = pos + 1;
         }
     }
-    
 }
+
