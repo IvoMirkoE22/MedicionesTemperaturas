@@ -41,7 +41,30 @@ public class MedicionesTemperaturas
     public void agregarRegistro(int nuevaTemperatura) {
         registros.add(new Integer(nuevaTemperatura));
     }
-    
+    /**
+     * Muestra todas las temperaturas registradas en 
+     * la pantalla.
+     * Una temperatura se considera extrema si es:
+     * -Mayor a 35°C (Caluroso)
+     * -Menor a -15°C (Frío)
+     * El método tambien cuenta por separado las temperaturas calurosas y frías
+     * Por si se desea usar esa información más adelante
+     */
+    public int cantTemperaturasExtremas(){
+        int cantTempC=0;
+        int cantTempF=0;
+        int tempExtremas;
+        for(int temperatura : registros){
+            if(temperatura > 35) {
+                cantTempC = cantTempC + 1;
+            }else
+                if(temperatura < -15){
+                    cantTempF = cantTempF + 1;
+                }
+        }
+        tempExtremas = cantTempC + cantTempF;
+        return tempExtremas;
+    }
     /**
      * Muestra todas las temperaturas registradas en 
      * la pantalla. 
