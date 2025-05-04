@@ -69,7 +69,79 @@ public class MedicionesTemperaturas
         tempExtremas = cantTempC + cantTempF;
         return tempExtremas;
     }
+    /**
+     * Devuelve el promedio de las temperaturas registradas
+     */
+    public double calcularPromedio() {
+    // Verifica si la lista de registros está vacía (no hay temperaturas)
+    if (registros.isEmpty()) {
+        return 0.0; // Si no hay temperaturas, devuelve 0.0
+    }
 
+    double suma = 0.0; // Variable para acumular la suma de las temperaturas
+
+    // Bucle que recorre cada temperatura en la lista 'registros'
+    for (double temp : registros) {
+        suma += temp; // Suma cada temperatura a la variable 'suma'
+    }
+
+    // Calcula el promedio dividiendo la suma total por la cantidad de registros
+    return suma / registros.size(); // registros.size() devuelve cuántas temperaturas hay
+    }
+    /**
+     * Devuelve la mayor temperatura registrada.
+     * retorna la temperatura más alta o -273.15 si no hay registros.
+     */
+    public double maximaTemperatura() {
+        if (registros.isEmpty()) {
+            return -273.15; // Devuelve el cero absoluto si no hay datos
+    }
+
+    // Se toma como máximo inicial la primera temperatura de la lista
+    double max = registros.get(0);
+
+    // Recorre todas las temperaturas y actualiza el máximo si encuentra una mayor
+    for (double temp : registros) {
+        if (temp > max) {
+            max = temp;
+        }
+    }
+
+    return max; // Devuelve la mayor temperatura encontrada
+    }
+    /**
+     * Devuelve la menor temperatura registrada.
+     * Retorna la más baja o -273.15 si no hay registros.
+     */
+    public double minimaTemperatura() {
+    if (registros.isEmpty()) {
+        return -273.15; // Devuelve cero absoluto si no hay registros
+    }
+
+    // Toma como mínimo inicial la primera temperatura de la lista
+    double min = registros.get(0);
+
+    // Recorre todas las temperaturas para encontrar la menor
+    for (double temp : registros) {
+        if (temp < min) {
+            min = temp;
+        }
+    }
+
+    return min; // Devuelve la temperatura más baja encontrada
+    }
+    /**
+     * Calcula la amplitud térmica (diferencia entre máxima y mínima).
+     * Retorna la amplitud térmica o 0.0 si no hay registros.
+     */
+    public double amplitudTermica() {
+        if (registros.isEmpty()) {
+            return 0.0; // Si no hay datos, no se puede calcular
+    }
+
+    // Resta la menor temperatura a la mayor
+    return maximaTemperatura() - minimaTemperatura();
+    }
     /**
      * Muestra todas las temperaturas registradas en 
      * la pantalla. 
