@@ -143,6 +143,30 @@ public class MedicionesTemperaturas
     return maximaTemperatura() - minimaTemperatura();
     }
     /**
+     * Método que calcula la cantidad de mediciones consecutivas con una misma temperatura
+     */
+    public int contadorRepeticionesConsecutivas(){
+        if(registros.isEmpty()){
+            return 0;// Si no hay datos, no se puede calcular
+        }
+        //cuando hay al menos una repetición registrado, ya tenemos una secuencia mínima de 1 repetición(la propia temperatura)
+        int maxRepeticiones = 1;//ya vimos la primera medición
+        int contadorActual =1;//el mínimo posible de repeticiones consecutivas es 1
+        int i =1;
+        while(i < registros.size()){
+            if(registros.get(i).equals(registros.get(i-1))){
+                contadorActual = contadorActual + 1;
+                if(contadorActual > maxRepeticiones){
+                    maxRepeticiones = contadorActual;
+                }
+            }else{
+                contadorActual = 1;
+            }
+            i = i+1;
+        }
+        return maxRepeticiones;
+    }
+    /**
      * Muestra todas las temperaturas registradas en 
      * la pantalla. 
      */
