@@ -4,21 +4,27 @@ import java.util.ArrayList;
  * Registros de temperaturas diarios de una estación meteorológica.
  *
  * Invariante de clase:
- * - 1 ≤ dia ≤ 31
+ * - 1 ≤ día ≤ 31
  * - 1 ≤ mes ≤ 12
  * - registros no es null
  * - todas las temperaturas registradas son ≥ -273.15°C
+ * 
+ * @author Ivo Mirko Elian Narváez
+ * @version 1.6 – Versión final con documentación, precondiciones y método repOK
  */
-public class MedicionesTemperaturas
-{
+public class MedicionesTemperaturas {
     private ArrayList<Double> registros;
     private int dia;
     private int mes;
 
     /**
      * Constructor.
+     * 
+     * @param dia Día del registro (1–31)
+     * @param mes Mes del registro (1–12)
+     * 
      * Precondición: 1 ≤ dia ≤ 31, 1 ≤ mes ≤ 12
-     * Postcondición: se crea un objeto con registros vacíos y fecha válida
+     * Postcondición: el objeto queda creado con lista vacía y fecha válida
      */
     public MedicionesTemperaturas(int dia, int mes) {
         assert dia >= 1 && dia <= 31 : "Día inválido";
@@ -28,28 +34,32 @@ public class MedicionesTemperaturas
         this.mes = mes;
         this.registros = new ArrayList<>();
 
-        assert repOk() : "Invariante violado en constructor";
+        assert repOk() : "Invariante violado al construir";
     }
 
     /**
-     * Agrega una nueva temperatura al registro.
-     * Precondición: temperatura ≥ -273.15
-     * Postcondición: registros.size() aumenta en 1
+     * Agrega una temperatura al registro.
+     * 
+     * @param nuevaTemperatura Temperatura a registrar (≥ -273.15)
+     * 
+     * Precondición: nuevaTemperatura ≥ -273.15
+     * Postcondición: la temperatura queda agregada al final de la lista
      */
     public void agregarRegistro(Double nuevaTemperatura) {
         assert nuevaTemperatura >= -273.15 : "Temperatura inválida";
 
         registros.add(nuevaTemperatura);
 
-        assert registros.contains(nuevaTemperatura) : "Temperatura no registrada";
+        assert registros.contains(nuevaTemperatura);
         assert repOk();
     }
 
     /**
      * Devuelve la cantidad de temperaturas extremas:
      * mayores a 35°C o menores a -15°C.
+     * 
      * Precondición: true
-     * Postcondición: retorna la cantidad de temperaturas extremas detectadas
+     * Postcondición: se retorna un entero ≥ 0
      */
     public int cantTemperaturasExtremas() {
         int cantTempC = 0;
@@ -63,12 +73,12 @@ public class MedicionesTemperaturas
             }
         }
 
-        int tempExtremas = cantTempC + cantTempF;
-        return tempExtremas;
+        return cantTempC + cantTempF;
     }
 
     /**
-     * Calcula el promedio de temperaturas registradas.
+     * Calcula el promedio de las temperaturas registradas.
+     * 
      * Precondición: true
      * Postcondición: retorna el promedio o 0.0 si no hay datos
      */
@@ -87,8 +97,9 @@ public class MedicionesTemperaturas
 
     /**
      * Devuelve la mayor temperatura registrada.
+     * 
      * Precondición: true
-     * Postcondición: retorna la temperatura máxima o -273.15 si no hay registros
+     * Postcondición: retorna el máximo o -273.15 si no hay registros
      */
     public double maximaTemperatura() {
         if (registros.isEmpty()) {
@@ -107,8 +118,9 @@ public class MedicionesTemperaturas
 
     /**
      * Devuelve la menor temperatura registrada.
+     * 
      * Precondición: true
-     * Postcondición: retorna la mínima o -273.15 si no hay registros
+     * Postcondición: retorna el mínimo o -273.15 si no hay registros
      */
     public double minimaTemperatura() {
         if (registros.isEmpty()) {
@@ -127,8 +139,10 @@ public class MedicionesTemperaturas
 
     /**
      * Calcula la amplitud térmica (máxima - mínima).
+     * 
      * Precondición: true
-     * Postcondición: retorna la amplitud térmica o 0.0 si no hay registros
+     * Postcondición: retorna la diferencia entre la mayor y la menor temperatura
+     * o 0.0 si no hay registros
      */
     public double amplitudTermica() {
         if (registros.isEmpty()) {
@@ -139,9 +153,10 @@ public class MedicionesTemperaturas
     }
 
     /**
-     * Cuenta la mayor cantidad de repeticiones consecutivas de una misma temperatura.
+     * Devuelve la cantidad máxima de repeticiones consecutivas de una misma temperatura.
+     * 
      * Precondición: true
-     * Postcondición: retorna la cantidad máxima de repeticiones consecutivas
+     * Postcondición: retorna un entero ≥ 1 o 0 si no hay registros
      */
     public int contadorRepeticionesConsecutivas() {
         if (registros.isEmpty()) {
@@ -167,9 +182,10 @@ public class MedicionesTemperaturas
     }
 
     /**
-     * Imprime todas las temperaturas registradas.
+     * Imprime en consola todas las temperaturas registradas con su índice.
+     * 
      * Precondición: true
-     * Postcondición: imprime cada temperatura con su posición
+     * Postcondición: cada temperatura queda mostrada por pantalla
      */
     public void imprimirTemperaturas() {
         System.out.println(dia + "/" + mes);
@@ -183,8 +199,10 @@ public class MedicionesTemperaturas
     }
 
     /**
-     * Verifica el invariante de clase.
-     */
+    * Verifica el invariante de clase.
+    * 
+    * @return true si se cumplen todas las condiciones del invariante, false si no.
+    */
     public boolean repOk() {
     if (dia < 1 || dia > 31) {
         return false;
